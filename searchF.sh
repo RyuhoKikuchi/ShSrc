@@ -14,8 +14,8 @@
 
 
 for x in $(find ./ | grep "\.js" | grep -v "jquery"); do
-    li1=(${$(cat $x | grep -n "function" | grep "(" | grep -v "//" | awk -F ":" '{print $1}')//\\n/ })
-    li2=(${$(cat $x | grep -n "}" | grep -v "    " | awk -F ":" '{print $1}')//\\n/ })
+    li1=(${$(grep -n "function" $x | grep "(" | grep -v "//" | awk -F ":" '{print $1}')//\\n/ })
+    li2=(${$(grep -n "}" $x | grep -v "    " | awk -F ":" '{print $1}')//\\n/ })
     echo "$x \n\n${li1[@]}\n${li2[@]}\n\n"
     for i in $(seq 1 ${#li1[@]}); do
         cat $x | sed -n "${li1[$i]},${li2[$i]}p" | bat -l JavaScript
